@@ -1,10 +1,7 @@
 <template>
     <div id="xpto">
       <h1>Contadores</h1>
-      <Contador></Contador>
-      <Contador></Contador>
-      <Contador></Contador>
-      <Contador/>
+      <Contadores/>
     </div>
 </template>
 
