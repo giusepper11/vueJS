@@ -1,6 +1,7 @@
 <template>
     <div class="contadores">
         <Contador v-for="c in 5" :key="c"></Contador>
+        <button>?</button>
     </div>
 </template>
 
