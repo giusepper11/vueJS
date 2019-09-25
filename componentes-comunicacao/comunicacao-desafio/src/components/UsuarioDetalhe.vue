@@ -10,13 +10,24 @@
 </template>
 
 <script>
-export default {
-    data() {
-        return {
-            usuario: null
+    import barramento from "../barramento";
+
+    export default {
+        data() {
+            return {
+                usuario: null
+            }
+        },
+        created() {
+            barramento.quandoAlterouLista((usuario) => {
+                if (Object.keys({...usuario}).length === 0 && {...usuario}.constructor === Object) {
+                    this.usuario = null
+                } else {
+                    this.usuario = usuario
+                }
+            })
         }
     }
-}
 </script>
 
 <style>

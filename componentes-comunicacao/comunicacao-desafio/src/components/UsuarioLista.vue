@@ -2,25 +2,32 @@
     <div class="usuario-lista">
         <table>
             <thead>
-                <tr>
-                    <th>#ID</th>
-                    <th>Nome</th>
-                </tr>
+            <tr>
+                <th>#ID</th>
+                <th>Nome</th>
+            </tr>
             </thead>
             <tbody>
-                <tr v-for="usuario in usuarios" :key="usuario.id">
-                    <td>{{ usuario.id }}</td>
-                    <td>{{ usuario.nome }}</td>
-                </tr>
+            <tr v-for="usuario in usuarios" :key="usuario.id" @mouseover="selecionaUser(usuario)" @mouseleave="selecionaUser(false)">
+                <td>{{ usuario.id }}</td>
+                <td>{{ usuario.nome }}</td>
+            </tr>
             </tbody>
         </table>
     </div>
 </template>
 
 <script>
-export default {
-    props: { usuarios: Array }
-}
+    import barramento from "../barramento";
+
+    export default {
+        props: {usuarios: Array},
+        methods: {
+            selecionaUser(user) {
+                barramento.alterarDetalhes({...user})
+            }
+        }
+    }
 </script>
 
 <style scoped>
@@ -31,7 +38,7 @@ export default {
 
     table {
         flex: 1;
-        border-spacing: 0px;
+        border-spacing: 0;
         border-collapse: separate;
         border-top: 1px solid #CCC;
     }
