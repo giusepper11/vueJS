@@ -11,13 +11,12 @@
     import barramento from "../barramento";
 
 
-
     export default {
         props: ['idade'],
         methods: {
             alterarIdade() {
-                this.idade = 33;
-                barramento.$emit('idadeMudou', this.idade)
+                this.idade ++;
+                barramento.alterarIdade(this.idade)
             }
         },
 
