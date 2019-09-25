@@ -8,7 +8,16 @@
 
 <script>
     export default {
-        props: ['nome'],
+        props: {
+            nome: {
+                type: String, //checa tipo de dado recebido
+                // required: true, // checa se prop foi inserida,
+                default: 'Alo' // Valor padrao da prop
+                // default: () => {
+                //     return Array(10).fill(0).join(',')
+                // } // Default gerado por função
+            },
+        },
         computed: {
             inverterNome() {
                 return this.nome.split('').reverse().join('')
