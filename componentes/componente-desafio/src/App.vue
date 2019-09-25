@@ -10,10 +10,10 @@
 <script>
 
 
-    import Navbar from "./Navbar";
-    import Toolbar from "./Toolbar";
-    import Carousel from "./Carousel";
-    import Footer from "./Footer";
+    import Navbar from "./components/template/Navbar";
+    import Toolbar from "./components/template/Toolbar";
+    import Carousel from "./components/widgets/Carousel";
+    import Footer from "./components/template/Footer";
 
     export default {
         components: {
