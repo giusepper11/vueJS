@@ -3,7 +3,10 @@
         <h2>As Informações de Usuário</h2>
         <p>Vários detalhes...</p>
         <p>Nome do Usuário: <strong>{{inverterNome}}</strong></p>
+        <p>Idade do Usuario <strong>{{idade}}</strong></p>
+
         <button @click="reiniciarNome">Reiniciar Nome</button>
+        <button @click="reiniciarFn">Reiniciar Nome (Callback)</button>
     </div>
 </template>
 
@@ -18,6 +21,8 @@
                 //     return Array(10).fill(0).join(',')
                 // } // Default gerado por função
             },
+            reiniciarFn : Function,
+            idade: Number
         },
         computed: {
             inverterNome() {

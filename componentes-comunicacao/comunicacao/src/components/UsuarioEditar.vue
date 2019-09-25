@@ -2,13 +2,20 @@
     <div class="componente">
         <h2>Alterar os Dados de Usuário</h2>
         <p>Edite as informações</p>
+        <p>Idade do Usuario <strong>{{idade}}</strong></p>
+        <button @click="alterarIdade">Alterar idade</button>
     </div>
 </template>
 
 <script>
-export default {
-    
-}
+    export default {
+        props: ['idade'],
+        methods: {
+            alterarIdade() {
+                this.$emit('idadeMudou', 33)
+            }
+        }
+    }
 </script>
 
 <style scoped>
