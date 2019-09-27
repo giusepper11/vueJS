@@ -2,7 +2,7 @@
     <div class="citacao">
         <!--        TAG VUE pra passar o conteudo montado onde chamou esse container-->
         <slot name="autor"></slot>
-        <slot name="texto"></slot>
+        <slot></slot>
         <slot name="fonte"></slot>
     </div>
 </template>
