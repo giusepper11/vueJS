@@ -8,7 +8,22 @@
 </template>
 
 <script>
-    export default {}
+    export default {
+        created() {
+            console.log('created')
+        },
+        destroyed() {
+            console.log('destroyed')
+        },
+        // Metodos de ciclo de vida dos componentes dinamicos
+        activated() {
+            console.log('activated')
+        },
+        deactivated() {
+            console.log('deactivated')
+        },
+
+    }
 </script>
 
 <style scoped>
