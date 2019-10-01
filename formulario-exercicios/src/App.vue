@@ -2,7 +2,7 @@
     <div id="app">
         <h1>Registrar Reclamação</h1>
         <div class="conteudo">
-            <form class="painel">
+            <form class="painel" v-if="!enviado">
                 <div class="cabecalho">Formulário</div>
                 <Rotulo nome="E-mail">
                     <input type="text" v-model.lazy.trim="usuario.email">
@@ -30,17 +30,17 @@
                         <option v-for="prioridade in prioridades"
                                 :key="prioridade.codigo"
                                 :value="prioridade.codigo"
-						:selected="prioridade.codigo === 3">{{ucfirst(prioridade.nome)}}
+                                :selected="prioridade.codigo === 3">{{ucfirst(prioridade.nome)}}
                         </option>
                     </select>
                 </Rotulo>
                 <Rotulo nome="Primeira Reclamação?">
-                    <Escolha/>
+                    <Escolha v-model="escolha"/>
                 </Rotulo>
                 <hr>
-                <button>Enviar</button>
+                <button @click.prevent="enviar">Enviar</button>
             </form>
-            <div class="painel">
+            <div class="painel" v-else>
                 <div class="cabecalho">Resultado</div>
                 <Rotulo nome="E-mail">
                     <span>{{usuario.email}}</span>
@@ -68,7 +68,7 @@
                     <span>{{prioridade}}</span>
                 </Rotulo>
                 <Rotulo nome="Primeira Reclamação?">
-                    <span>???</span>
+                    <span>{{escolha}}</span>
                 </Rotulo>
             </div>
         </div>
@@ -88,7 +88,7 @@
                 mensagem: '',
                 caracteristicas: [],
                 produto: 'web',
-				prioridade: '',
+                prioridade: '',
                 prioridades: [
                     {codigo: 1, nome: 'baixa'},
                     {codigo: 2, nome: 'moderada'},
@@ -99,7 +99,9 @@
                     email: '',
                     senha: '',
                     idade: ''
-                }
+                },
+                escolha: true,
+                enviado: false,
             }
         },
         computed: {
@@ -111,8 +113,11 @@
             ucfirst: text => text.toLowerCase()
                 .split(' ')
                 .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-                .join(' ')
-        }
+                .join(' '),
+            enviar() {
+                this.enviado = true
+            }
+        },
 
     }
 </script>
