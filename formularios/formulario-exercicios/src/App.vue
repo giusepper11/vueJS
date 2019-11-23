@@ -2,7 +2,7 @@
     <div id="app">
         <h1>Registrar Reclamação</h1>
         <div class="conteudo">
-            <form class="painel" v-if="!enviado">
+            <div class="painel" v-if="!enviado">
                 <div class="cabecalho">Formulário</div>
                 <Rotulo nome="E-mail">
                     <input type="text" v-model.lazy.trim="usuario.email">
@@ -21,16 +21,14 @@
                     <span><input type="checkbox" value="intermitente" v-model="caracteristicas"> Intermitente</span>
                 </Rotulo>
                 <Rotulo nome="Qual produto?">
-                    <span class="mr-4"><input type="radio" value="web" v-model="produto"> Web</span>
-                    <span class="mr-4"><input type="radio" value="mobile" v-model="produto"> Mobile</span>
+                    <span class="mr-4"><input value="web" type="radio" v-model="produto"> Web</span>
+                    <span class="mr-4"><input value="mobile" type="radio" v-model="produto"> Mobile</span>
                     <span><input type="radio" value="outro" v-model="produto"> Outro</span>
                 </Rotulo>
                 <Rotulo nome="Prioridade">
-                    <select v-model="prioridade">
-                        <option v-for="prioridade in prioridades"
-                                :key="prioridade.codigo"
-                                :value="prioridade.codigo"
-                                :selected="prioridade.codigo === 3">{{ucfirst(prioridade.nome)}}
+                    <select name="" id="" v-model="prioridade">
+                        <option v-for="prioridade in prioridades" :value="prioridade.valor" :key="prioridade.valor">
+                            {{prioridade.name}}
                         </option>
                     </select>
                 </Rotulo>
@@ -39,27 +37,24 @@
                 </Rotulo>
                 <hr>
                 <button @click.prevent="enviar">Enviar</button>
-            </form>
+            </div>
             <div class="painel" v-else>
                 <div class="cabecalho">Resultado</div>
                 <Rotulo nome="E-mail">
-                    <span>{{usuario.email}}</span>
+                    <span>{{usuario.email || '??'}}</span>
                 </Rotulo>
                 <Rotulo nome="Senha">
-                    <span>{{usuario.senha}}</span>
+                    <span>{{usuario.senha || '??'}}</span>
                 </Rotulo>
                 <Rotulo nome="Idade">
-                    <span>{{usuario.idade}} {{tipoIdade}}</span>
+                    <span>{{usuario.idade || '??'}}</span>
+                    <span>{{tipo}}</span>
                 </Rotulo>
                 <Rotulo nome="Mensagem">
-                    <span style="white-space: pre">{{mensagem}}</span>
+                    <span style="white-space: pre">{{mensagem || '??'}}</span>
                 </Rotulo>
                 <Rotulo nome="Marque as Opções">
-                    <span>
-						<ul>
-							<li v-for="c in caracteristicas" :key="c"> {{ c}}</li>
-						</ul>
-					</span>
+                    <span>{{caracteristicas}}</span>
                 </Rotulo>
                 <Rotulo nome="Qual produto?">
                     <span>{{produto}}</span>
@@ -82,43 +77,38 @@
     export default {
         name: 'app',
         components: {Rotulo, Escolha},
-        data: () => {
+        data() {
             return {
-                // email: '',
+
+                usuario: {
+                    // email: '',
+                    // senha: '',
+                    // idade: 25
+                },
                 mensagem: '',
                 caracteristicas: [],
                 produto: 'web',
-                prioridade: '',
                 prioridades: [
-                    {codigo: 1, nome: 'baixa'},
-                    {codigo: 2, nome: 'moderada'},
-                    {codigo: 3, nome: 'alta'}
+                    {name: 'Alta', valor: 3},
+                    {name: 'Média', valor: 2},
+                    {name: 'Baixa', valor: 1},
                 ],
-                usuario: {
-                    //JS cria o objeto dinamicamente n ne
-                    email: '',
-                    senha: '',
-                    idade: ''
-                },
+                prioridade: 1,
                 escolha: true,
-                enviado: false,
+                enviado: false
             }
         },
         computed: {
-            tipoIdade() {
+
+            tipo() {
                 return typeof this.usuario.idade
             }
         },
-        methods: {
-            ucfirst: text => text.toLowerCase()
-                .split(' ')
-                .map((s) => s.charAt(0).toUpperCase() + s.substring(1))
-                .join(' '),
-            enviar() {
-                this.enviado = true
-            }
-        },
-
+		methods: {
+        	enviar(){
+        		this.enviado = true
+			}
+		}
     }
 </script>
 

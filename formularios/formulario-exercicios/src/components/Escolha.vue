@@ -1,26 +1,22 @@
 <template>
     <div class="escolha"
-        @click="$emit('input',!value)"
-        :class="{ligado:value, desligado: !value}">
-        <div v-if="value" class="botao"></div>
+         @click="$emit('input', !value)"
+         :class="{ligado:value, desligado: !value}">
+        <div v-if="ligado" class="botao"></div>
         <div v-else class="botao"></div>
     </div>
 </template>
 
 <script>
-export default {
-    props: {
-      value: {
-          type: Boolean,
-          required: true
-      }
-    },
-    data() {
-        return {
-            ligado: false
-        }
+    export default {
+        props: {
+            value: {
+                type: Boolean,
+                required: true
+            }
+        },
+
     }
-}
 </script>
 
 <style scoped>
