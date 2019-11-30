@@ -3,12 +3,19 @@ import axios from 'axios'
 
 // Comentando para criar instancia individual do axios
 // axios.defaults.baseURL = 'https://curso-vue-e6bbc.firebaseio.com/';
+// axios.defaults.headers.common['Authorization'] = 'asdvd';
+// axios.defaults.headers.get['Accepts'] = 'application/json';
 
 Vue.use(
     {
         install(Vue) {
             Vue.prototype.$http = axios.create({
-                baseURL: 'https://curso-vue-e6bbc.firebaseio.com/'
+                baseURL: 'https://curso-vue-e6bbc.firebaseio.com/',
+                headers: {
+
+                    Authorization: 'asdasdasdasd'
+
+                }
             });
             Vue.prototype.$http.interceptors.request.use(config => {
                 console.log(config.method);

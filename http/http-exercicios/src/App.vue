@@ -1,6 +1,9 @@
 <template>
     <div id="app" class="container">
         <h1>HTTP com Axios</h1>
+        <b-alert show dismissible v-for="mensagem in mensagens" :key="mensagem.texto" :variant="mensagem.kind">
+            {{mensagem.texto}}
+        </b-alert>
         <b-card>
             <b-form-group label="Nome:">
                 <b-form-input type="text" size="lg"
@@ -13,7 +16,7 @@
                               placeholder="Informe Email"/>
             </b-form-group>
             <hr>
-            <b-button @click="salvar" variant="danger" size="lg">Salvar</b-button>
+            <b-button @click="salvar" variant="success" size="lg">Salvar</b-button>
             <b-button @click="obterUsuarios" variant="primary" size="lg" class="ml-2">Obter usuarios</b-button>
         </b-card>
         <hr>
@@ -22,6 +25,12 @@
                 <strong>Nome:</strong>{{usuario.nome}} <br>
                 <strong>Email:</strong>{{usuario.email}} <br>
                 <strong>ID:</strong>{{id}} <br>
+                <b-button variant="warning" size="lg"
+                          @click="carregar(id)">Carregar
+                </b-button>
+                <b-button variant="danger" size="lg" class="ml-2"
+                          @click="excluir(id)">Excluir
+                </b-button>
             </b-list-group-item>
         </b-list-group>
     </div>
@@ -34,7 +43,9 @@
     export default {
         data() {
             return {
+                mensagens: [],
                 usuarios: [],
+                id: null,
                 usuario: {
                     nome: '',
                     email: ''
@@ -43,12 +54,19 @@
         },
         methods: {
             salvar() {
-                console.log({...this.usuario});
-                this.$http.post('usuarios.json', this.usuario)
-                    .then(resp => {
-                        this.usuario = {nome: '', email: ''}
-                    })
+                const metodo = this.id ? 'patch' : 'post';
+                const finalUrl = this.id ? `/${this.id}.json` : '.json';
+                this.$http[metodo](`/usuarios${finalUrl}`, this.usuario)
+                    .then(_ => {
+                            this.limpar();
+                            this.mensagens.push({
+                                texto: 'Operação realizada com sucesso',
+                                kind: 'success'
+                            })
+                        }
+                    )
             },
+
             obterUsuarios() {
                 this.$http.get('https://curso-vue-e6bbc.firebaseio.com/' + 'usuarios.json')
                     .then(resp => {
@@ -56,7 +74,27 @@
                         this.usuarios = resp.data;
                         console.log(this.usuarios)
                     })
+            },
 
+            limpar() {
+                this.usuario.nome = '';
+                this.usuario.email = '';
+                this.id = null;
+                this.mensagens = []
+            },
+            carregar(id) {
+                this.id = id;
+                this.usuario = {...this.usuarios[id]}
+            },
+            excluir(id) {
+                this.$http.delete(`/usuarios/${id}.json`)
+                    .then(_ => this.limpar())
+                    .catch(err => {
+                        this.mensagens.push({
+                            texto: 'Problemas para excluir',
+                            kind: 'danger'
+                        })
+                    })
             }
         }
         // created() {
