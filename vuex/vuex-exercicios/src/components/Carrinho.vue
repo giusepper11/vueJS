@@ -3,18 +3,18 @@
         <div class="carrinho">
             <table>
                 <thead>
-                    <tr>
-                        <th>Nome</th>
-                        <th>Qtde</th>
-                        <th>Preço</th>
-                    </tr>
+                <tr>
+                    <th>Nome</th>
+                    <th>Qtde</th>
+                    <th>Preço</th>
+                </tr>
                 </thead>
                 <tbody>
-                    <tr v-for="produto in produtos" :key="produto.nome">
-                        <td>{{ produto.nome }}</td>
-                        <td>{{ produto.quantidade }}</td>
-                        <td>{{ produto.preco | dinheiro }}</td>
-                    </tr>
+                <tr v-for="produto in produtos" :key="produto.nome">
+                    <td>{{ produto.nome }}</td>
+                    <td>{{ produto.quantidade }}</td>
+                    <td>{{ produto.preco | dinheiro }}</td>
+                </tr>
                 </tbody>
             </table>
             <hr>
@@ -26,18 +26,21 @@
 </template>
 
 <script>
-export default {
-    computed: {
-        total() {
-            return this.$store.getters.valorTotal
+    import {mapGetters} from "vuex";
+
+    export default {
+        computed: {
+            ...mapGetters('carrinho',{total:'valorTotal'}),
+            // total() {
+            //     return this.$store.getters.valorTotal
+            // },
+            produtos() {
+                return this.$store.state.carrinho.produtos
+            }
         },
-        produtos(){
-            return this.$store.state.produtos
-        }
-    },
 
 
-}
+    }
 </script>
 
 <style>
